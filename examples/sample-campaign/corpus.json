@@ -1,0 +1,53 @@
+[
+  {
+    "domain": "northstar.example",
+    "passages": [
+      {
+        "source_url": "https://northstar.example/",
+        "label": "positioning",
+        "text": "We build governed AI agent workflows for specialist operations teams."
+      },
+      {
+        "source_url": "https://northstar.example/platform",
+        "label": "offering",
+        "text": "Every automated action passes through human review with a complete audit trail."
+      }
+    ]
+  },
+  {
+    "domain": "distributed.example",
+    "passages": [
+      {
+        "source_url": "https://distributed.example/services",
+        "label": "audience",
+        "text": "We support global teams managing overseas contractors and remote operations."
+      },
+      {
+        "source_url": "https://distributed.example/approach",
+        "label": "value_prop",
+        "text": "Structured workflow automation gives leaders visibility without removing human oversight."
+      }
+    ]
+  },
+  {
+    "domain": "dashboards.example",
+    "passages": [
+      {
+        "source_url": "https://dashboards.example/",
+        "label": "offering",
+        "text": "Simple analytics dashboards and weekly reporting for small businesses."
+      }
+    ]
+  },
+  {
+    "domain": "consumer.example",
+    "passages": [
+      {
+        "source_url": "https://consumer.example/",
+        "label": "positioning",
+        "text": "A social mobile app for sharing AI-generated stickers with friends."
+      }
+    ]
+  }
+]
+

@@ -1,0 +1,5 @@
+phrase,threshold,only_labels,assumption
+governed agent workflows,0.35,positioning,Targets should describe AI agents inside controlled workflows
+human approval and audit trail,0.25,offering;value_prop,The campaign depends on reviewable rather than autonomous execution
+visibility for distributed operations teams,0.18,audience;value_prop,Distributed operators are likely to value structured oversight
+
