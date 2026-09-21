@@ -16,8 +16,6 @@ campaign brief
 → operator refinement
 ```
 
-See [`MIGRATION.md`](MIGRATION.md) for the recovered modules and extraction plan.
-
 ## Run the example
 
 Requires Python 3.11+. The fixture runner has no external model or API dependency.
