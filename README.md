@@ -1,5 +1,7 @@
 # Campaign Resonance Engine
 
+For agent-assisted operation, start with [AGENTS.md](AGENTS.md). Claude Code loads the same guide through [CLAUDE.md](CLAUDE.md).
+
 Find companies whose own language provides evidence that a campaign premise will resonate.
 
 ## Repository status
