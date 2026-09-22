@@ -7,7 +7,9 @@ from collections import defaultdict
 from .models import DomainRollup, QueryHit
 
 
-def rollup_hits(hits: list[QueryHit]) -> list[DomainRollup]:
+def rollup_hits(hits: list[QueryHit], *, ranking="similarity") -> list[DomainRollup]:
+    if ranking not in {"similarity", "breadth"}:
+        raise ValueError("Ranking must be similarity or breadth")
     by_domain: dict[str, list[QueryHit]] = defaultdict(list)
     for hit in hits:
         by_domain[hit.domain].append(hit)
@@ -32,6 +34,8 @@ def rollup_hits(hits: list[QueryHit]) -> list[DomainRollup]:
                 source_urls=[hit.source_url for hit in ordered],
             )
         )
-    rows.sort(key=lambda row: (-row.n_queries_matched, -row.sum_score, row.domain))
+    if ranking == "breadth":
+        rows.sort(key=lambda row: (-row.n_queries_matched, -row.sum_score, row.domain))
+    else:
+        rows.sort(key=lambda row: (-row.max_score, -row.avg_score, row.domain))
     return rows
-

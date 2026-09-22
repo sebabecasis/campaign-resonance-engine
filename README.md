@@ -40,7 +40,7 @@ The run writes:
 - `rollup.csv` — the company ranking;
 - `run.json` — the reproducibility manifest.
 
-The bundled encoder is a deterministic demonstration adapter. The retrieval and evidence contracts are designed so it can be replaced by a production embedding provider.
+The bundled encoder is a deterministic demonstration adapter. [Live collection and embeddings](docs/live-workflow.md) are available through --source-plan and --encoder openai. The default ranking is strongest vector similarity, then average similarity; --ranking breadth retains the original breadth-first policy. Inputs and provider settings are snapshotted in run.json. Tests mock provider calls; no real account acceptance run is implied.
 
 ## Test
 

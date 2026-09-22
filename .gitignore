@@ -13,3 +13,4 @@ data/index/
 data/processed/
 outputs/
 runs/
+.demo/

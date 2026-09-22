@@ -56,9 +56,10 @@ class CampaignResonanceTest(unittest.TestCase):
             QueryHit("q2", "broad.example", 0.4, "audience", "p2", "https://broad.example/2"),
             QueryHit("q1", "narrow.example", 0.99, "offering", "p3", "https://narrow.example"),
         ]
-        rows = rollup_hits(hits)
+        rows = rollup_hits(hits, ranking="breadth")
         self.assertEqual("broad.example", rows[0].domain)
         self.assertEqual(2, rows[0].n_queries_matched)
+        self.assertEqual("narrow.example", rollup_hits(hits)[0].domain)
 
     def test_pipeline_writes_explainable_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -76,4 +77,3 @@ class CampaignResonanceTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

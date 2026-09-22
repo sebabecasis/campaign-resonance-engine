@@ -13,6 +13,7 @@ from .index import build_index, load_corpus, write_index
 from .models import QueryHit, QuerySpec
 from .rollup import rollup_hits
 from .search import search_index
+from .providers import digest
 
 
 def load_queries(path: str | Path) -> list[QuerySpec]:
@@ -69,15 +70,20 @@ def run_campaign(
     output_dir: str | Path,
     *,
     encoder: ConceptHashEncoder | None = None,
+    ranking: str = "similarity",
 ) -> dict:
     active_encoder = encoder or ConceptHashEncoder()
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     passages = load_corpus(corpus_path)
+    if getattr(active_encoder, "provider", "demo") != "demo":
+        raw = json.loads(Path(corpus_path).read_text())
+        if any(not p.get("source_url", "").startswith(("https://", "http://")) for c in raw for p in c.get("passages", [])):
+            raise ValueError("Production corpus requires explicit source URLs")
     index = build_index(passages, encoder=active_encoder)
     queries = load_queries(query_path)
     hits = search_index(index, queries, encoder=active_encoder)
-    rollup = rollup_hits(hits)
+    rollup = rollup_hits(hits, ranking=ranking)
 
     index_path = output / "index.jsonl"
     hits_path = output / "hits.csv"
@@ -89,7 +95,14 @@ def run_campaign(
     manifest = {
         "created_at": datetime.now(timezone.utc).isoformat(),
         "encoder": type(active_encoder).__name__,
+        "ranking": ranking,
         "dimensions": active_encoder.dimensions,
+        "model": getattr(active_encoder, "model", None),
+        "provider": getattr(active_encoder, "provider", "demo"),
+        "corpus_hash": digest(json.loads(Path(corpus_path).read_text())),
+        "queries_hash": digest(Path(query_path).read_text()),
+        "corpus_snapshot": json.loads(Path(corpus_path).read_text()),
+        "queries_snapshot": Path(query_path).read_text(),
         "passages": len(passages),
         "indexed_passages": len(index),
         "queries": len(queries),
@@ -103,4 +116,3 @@ def run_campaign(
     }
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     return {"manifest": manifest, "hits": hits, "rollup": rollup}
-
